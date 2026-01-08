@@ -7,7 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class LawAdapter(
-    private var laws: List<Law>
+    private var laws: List<LawModel>,
+    private val onClick: (LawModel) -> Unit
 ) : RecyclerView.Adapter<LawAdapter.LawViewHolder>() {
 
     class LawViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -23,12 +24,15 @@ class LawAdapter(
     override fun onBindViewHolder(holder: LawViewHolder, position: Int) {
         val law = laws[position]
         holder.titleTextView.text = law.title
+        holder.itemView.setOnClickListener {
+            onClick(law)
+        }
     }
 
     override fun getItemCount(): Int = laws.size
 
-    fun updateList(newLaws: List<Law>) {
-        laws = newLaws
+    fun updateList(newList: List<LawModel>) {
+        laws = newList
         notifyDataSetChanged()
     }
 }
